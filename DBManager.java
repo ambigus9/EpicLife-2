@@ -77,21 +77,40 @@ public class DBManager {
         return contenedor;
     }
 
-
-
+    /**
+     * Este metodo genera un contenedor necesario para la insercion de la informacion en SQlite
+     * los atributos que no se pasan tienen los valores por defecto
+     * @param Nombre Nombre que se le asigna al evento
+     * @param Descripcion Descripcion que se le asigna al evento
+     * @param Tipo Tipo de evento {Batalla-Entrenamiento-Investigacion}
+     */
+    public ContentValues generarContenedorEvento(String Nombre,String Descripcion,String Tipo,String Estado){
+        ContentValues contenedor= new ContentValues();
+        contenedor.put(E_Nombre,Nombre);
+        contenedor.put(E_Descripcion,Descripcion);
+        contenedor.put(E_Tipo,Tipo);
+        contenedor.put(E_Estado,Estado);
+        return contenedor;
+    }
 
     /**
-     * Permite cargar un cursos con la informacion de todos los Personajes
+     * Permite cargar un cursor con la informacion de todos los Personajes
      */
     public Cursor cargarCursorPersonaje(){
         String [] columnas=new String []{P_Id,P_Nombre,P_Genero,P_Edad,P_Nivel_Salud,P_Nivel_Inteligencia,P_Nivel_Agilidad,P_Monedas,P_Nivel,P_live};
         return db.query("personajes", columnas, null, null, null, null, null);
     }
 
-
+    /**
+     * Permite cargar un cursor con la informacion de todos los Eventos
+     */
+    public Cursor cargarCursorEvento(){
+        String [] columnas=new String []{E_Id,E_Nombre,E_Descripcion,E_Tipo,E_Estado};
+        return db.query("eventos", columnas, null, null);
+    } // Cuántos null van, tantos como variables tenga?
 
     /**
-     * Este medodo permite Buscar un personaje en la base de datos
+     * Este metodo permite Buscar un personaje en la base de datos
      * por el nombre.     *
      * @param Nombre Nombre que se le asigna al personaje
      */
@@ -101,7 +120,7 @@ public class DBManager {
     }
 
     /**
-     * Este medodo permite Buscar un evento en la base de datos
+     * Este metodo permite Buscar un evento en la base de datos
      * por el nombre.     *
      * @param Nombre Nombre que se le asigna al evento
      */
