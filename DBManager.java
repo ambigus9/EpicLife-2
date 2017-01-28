@@ -66,6 +66,21 @@ public class DBManager {
     }
 
     /**
+     * Este metodo permite insertar Armas en la base de datos
+     *
+     * @param Nombre Nombre del arma.
+     * @param Descripcion Descripcion del arma.
+     * @param Costo Costo del item, en monedas de oro.
+     * @param Bonus_Salud Es el valor que aumenta la salud del jugador con esta arma.
+     * @param Bonus_Inteligencia Es el valor que aumenta la inteligencia del jugador con esta arma.
+     * @param Bonus_Agilidad Es el valor que aumenta la agilidad del jugador con esta arma.
+     * @param Elemento Elemento del arma.
+     */
+    public void insertarArma(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad,String Elemento){
+        db.insert("armas", null,generarContenedorObjetivo(Nombre,Descripcion,Costo,Salud,Inteligencia,Agilidad,Elemento));
+    }
+
+    /**
      * Este metodo genera un contenedor necesario para la insercion de la informacion en SQlite
      * los atributos que no se pasan tienen los valores por defecto
      * @param Nombre Nombre que se le asigna a la mision
@@ -159,6 +174,29 @@ public class DBManager {
     }
 
     /**
+     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
+     * los atributos que no se pasan tienen los valores por defecto
+     * @param Nombre Nombre del arma.
+     * @param Descripcion Descripcion del arma.
+     * @param Costo Costo del item, en monedas de oro.
+     * @param Bonus_Salud Es el valor que aumenta la salud del jugador con esta arma.
+     * @param Bonus_Inteligencia Es el valor que aumenta la inteligencia del jugador con esta arma.
+     * @param Bonus_Agilidad Es el valor que aumenta la agilidad del jugador con esta arma.
+     * @param Elemento Elemento del arma.
+     */
+    public ContentValues generarContenedorArma(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad,String Elemento){
+        ContentValues contenedor= new ContentValues();
+        contenedor.put(W_Nombre,Nombre);
+        contenedor.put(W_Descripcion,Descripcion);
+        contenedor.put(W_Costo,Costo);
+        contenedor.put(W_Bonus_Salud,Salud);
+        contenedor.put(W_Bonus_Inteligencia,Inteligencia);
+        contenedor.put(W_Bonus_Agilidad,Agilidad);
+        contenedor.put(W_Elemento,Elemento);
+        return contenedor;
+    }
+
+    /**
      * Permite cargar un cursor con la informacion de todos los Personajes
      */
     public Cursor cargarCursorPersonaje(){
@@ -188,6 +226,14 @@ public class DBManager {
     public Cursor cargarCursorObjetivo(){
         String [] columnas=new String []{O_Id,O_Descripcion,O_Estado};
         return db.query("objetivos", columnas, null, null);
+    }
+
+    /**
+     * Permite cargar un cursor con la informacion de todos las Armas
+     */
+    public Cursor cargarCursorArma(){
+        String [] columnas=new String []{W_Id,W_Nombre,W_Descripcion,W_Costo,W_Bonus_Salud,W_Bonus_Inteligencia,W_Bonus_Agilidad,W_Elemento};
+        return db.query("armas", columnas, null, null);
     }
 
     /**
@@ -230,6 +276,16 @@ public class DBManager {
         return db.query("objetivos", columnas,O_Descripcion+"=?",new String[]{Descripcion}, null, null, null);
     }
 
+    /**
+     * Este metodo permite Buscar un arma en la base de datos
+     * por el nombre.     *
+     * @param Nombre Nombre de un arma
+     */
+    public Cursor buscarArmaNombre(String Descripcion){
+        String [] columnas=new String []{W_Id,W_Nombre,W_Descripcion,W_Costo,W_Bonus_Salud,W_Bonus_Inteligencia,W_Bonus_Agilidad,W_Elemento};
+        return db.query("armas", columnas,W_Nombre+"=?",new String[]{Nombre}, null, null, null);
+    }
+
     public void modificarPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
         db.update("personajes", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
     }
@@ -244,6 +300,10 @@ public class DBManager {
 
     public void modificarObjetivo(String Descripcion,String Estado){
         db.update("objetivos", generarContenedorObjetivo(Descripcion,Estado),O_Descripcion+"=?",new String[]{Descripcion});
+    }
+
+    public void modificarArma(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad,String Elemento){
+        db.update("armas", generarContenedorArma(Nombre,Descripcion,Costo,Salud,Inteligencia,Agilidad,Elemento),W_Nombre+"=?",new String[]{Nombre});
     }
 
     //campos de la tabla Personaje
@@ -278,6 +338,16 @@ public class DBManager {
     public static final String O_Descripcion="descripcion";
     public static final String O_Estado="estado";
 
+    //campos de la tabla Armas
+    public static final String W_Id="_id";
+    public static final String W_Nombre="nombre";
+    public static final String W_Descripcion="descripcion";
+    public static final String W_Costo="costo";
+    public static final String W_Bonus_Salud="salud";
+    public static final String W_Bonus_Inteligencia="inteligencia";
+    public static final String W_Bonus_Agilidad="agilidad";
+    public static final String W_Elemento="elemento";
+
     // Variables para la creacion de tablas en la base de datos
     public static final String Crear_Tabla_Personaje="create table personajes ("
             +P_Id+" integer primary key autoincrement,"
@@ -311,5 +381,14 @@ public class DBManager {
             +O_Descripcion+" text not null,"
             +O_Estado+" text not null,"
 
+    public static final String Crear_Tabla_Arma="create table armas ("
+            +W_Id+" integer primary key autoincrement,"
+            +W_Nombre+" text not null,"
+            +W_Descripcion+" text not null,"
+            +W_Costo+" text not null,"
+            +W_Bonus_Salud+" text not null,"
+            +W_Bonus_Inteligencia+" text not null,"
+            +W_Bonus_Agilidad+" text not null,"
+            +W_Elemento+" text not null,"
 
 }
