@@ -122,7 +122,7 @@ public class DBManager {
     public static final String E_Nombre="nombre";
     public static final String E_Descripcion="descripcion";
     public static final String E_Tipo="tipo";
-    public static final Boolean E_Estado="estado";
+    public static final String E_Estado="estado";
 
     // Variables para la crearcion de tablas en la base de datos
     public static final String Crear_Tabla_Personaje="create table personajes ("
@@ -142,8 +142,7 @@ public class DBManager {
             +E_Nombre+" text not null,"
             +E_Descripcion+" text not null,"
             +E_Tipo+" text not null,"
-            // aqui nose que poner XD boolean not null??
-            +E_Estado+" boolean not null,"
+            +E_Estado+" text not null,"
 
 
 
