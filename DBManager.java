@@ -105,8 +105,6 @@ public class DBManager {
         db.update("usuarios", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
     }
 
-
-
     //campos de la tabla Personaje
     public static final String P_Id="_id";
     public static final String P_Nombre="nombre";
@@ -142,14 +140,10 @@ public class DBManager {
     public static final String Crear_Tabla_Evento="create table eventos ("
             +E_Id+" integer primary key autoincrement,"
             +E_Nombre+" text not null,"
-            +P_Genero+" text not null,"
-            +P_Edad+" text not null,"
-            +P_Nivel_Salud+" text not null,"
-            +P_Nivel_Inteligencia+" text not null,"
-            +P_Nivel_Agilidad+" text not null,"
-            +P_Monedas+" text not null,"
-            +P_Nivel+" text not null,"
-            +P_live+" text not null);";
+            +E_Descripcion+" text not null,"
+            +E_Tipo+" text not null,"
+            // aqui nose que poner XD boolean not null??
+            +E_Estado+" boolean not null,"
 
 
 
