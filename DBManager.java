@@ -137,12 +137,16 @@ public class DBManager {
     }
 
     public void modificarPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
-        db.update("usuarios", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
+        db.update("personajes", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
     } // Porque colocas usuarios en vez de personajes???
 
     public void modificarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
-        db.update("usuarios", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
-    } // Donde se hace el update en Usuarios o Eventos?
+        db.update("eventos", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
+    }
+
+    public void modificarMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
+        db.update("eventos", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
+    }
 
     //campos de la tabla Personaje
     public static final String P_Id="_id";
@@ -163,7 +167,15 @@ public class DBManager {
     public static final String E_Tipo="tipo";
     public static final String E_Estado="estado";
 
-    // Variables para la crearcion de tablas en la base de datos
+    //campos de la tabla Mision
+    public static final String M_Id="_id";
+    public static final String M_Nombre="nombre";
+    public static final String M_Descripcion="descripcion";
+    public static final String M_Monedas="monedas";
+    public static final String M_Factor="factor";
+    public static final String M_Tiempo="tiempo";
+
+    // Variables para la creacion de tablas en la base de datos
     public static final String Crear_Tabla_Personaje="create table personajes ("
             +P_Id+" integer primary key autoincrement,"
             +P_Nombre+" text not null,"
@@ -183,6 +195,13 @@ public class DBManager {
             +E_Tipo+" text not null,"
             +E_Estado+" text not null,"
 
+    public static final String Crear_Tabla_Mision="create table mision ("
+            +M_Id+" integer primary key autoincrement,"
+            +M_Nombre+" text not null,"
+            +M_Descripcion+" text not null,"
+            +M_Monedas+" text not null,"
+            +M_Factor+" text not null,"
+            +M_Tiempo+" text not null,"
 
 
 }
