@@ -100,10 +100,23 @@ public class DBManager {
         return db.query("personajes", columnas,P_Nombre+"=?",new String[]{Nombre}, null, null, null);
     }
 
+    /**
+     * Este medodo permite Buscar un evento en la base de datos
+     * por el nombre.     *
+     * @param Nombre Nombre que se le asigna al evento
+     */
+    public Cursor buscarEventoNombre(String Nombre){
+        String [] columnas=new String []{E_Id,E_Nombre,E_Descripcion,E_Tipo,E_Estado};
+        return db.query("eventos", columnas,E_Nombre+"=?",new String[]{Nombre}, null, null, null);
+    }
 
     public void modificarPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
         db.update("usuarios", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
     }
+
+    public void modificarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
+        db.update("usuarios", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
+    } // Dónde se hace el update en Usuarios o Eventos?
 
     //campos de la tabla Personaje
     public static final String P_Id="_id";
