@@ -19,9 +19,6 @@ public class DBManager {
         db = helper.getWritableDatabase();
     }
 
-
-
-
     /**
      * Este metodo permite insertar Personajes principales en la base de datos
      *
@@ -33,7 +30,16 @@ public class DBManager {
         db.insert("personajes", null,generarContenedorPersonajeNuevo(Nombre,Genero,Edad));
     }
 
-
+    /**
+     * Este metodo permite insertar Eventos principales en la base de datos
+     *
+     * @param Nombre Nombre que se le asigna al personaje
+     * @param Genero Genero que se le asigna al personaje {Hombre-Mujer}
+     * @param Edad  Edad inicial del personaje
+     */
+    public void insertarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
+        db.insert("eventos", null,generarContenedorEvento(Nombre,Descripcion,Tipo,Estado));
+    } // Este null no lo entiendo XD
 
     /**
      * Este metodo genera un contenedor necesario para la insercion de la informacion en SQlite
@@ -83,6 +89,7 @@ public class DBManager {
      * @param Nombre Nombre que se le asigna al evento
      * @param Descripcion Descripcion que se le asigna al evento
      * @param Tipo Tipo de evento {Batalla-Entrenamiento-Investigacion}
+     * @param Estado Estado del evento {True-False}
      */
     public ContentValues generarContenedorEvento(String Nombre,String Descripcion,String Tipo,String Estado){
         ContentValues contenedor= new ContentValues();
@@ -131,11 +138,11 @@ public class DBManager {
 
     public void modificarPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
         db.update("usuarios", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
-    }
+    } // Porque colocas usuarios en vez de personajes???
 
     public void modificarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
         db.update("usuarios", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
-    } // Dónde se hace el update en Usuarios o Eventos?
+    } // Donde se hace el update en Usuarios o Eventos?
 
     //campos de la tabla Personaje
     public static final String P_Id="_id";
