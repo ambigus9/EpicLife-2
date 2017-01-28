@@ -119,6 +119,12 @@ public class DBManager {
     public static final String P_Nivel="nivel";
     public static final String P_live="live";
 
+    //campos de la tabla Evento
+    public static final String E_Id="_id";
+    public static final String E_Nombre="nombre";
+    public static final String E_Descripcion="descripcion";
+    public static final String E_Tipo="tipo";
+    public static final Boolean E_Estado="estado";
 
     // Variables para la crearcion de tablas en la base de datos
     public static final String Crear_Tabla_Personaje="create table personajes ("
@@ -133,11 +139,18 @@ public class DBManager {
             +P_Nivel+" text not null,"
             +P_live+" text not null);";
 
-    //campos de la tabla Evento
-    public static final String E_Id="_id";
-    public static final String E_Nombre="nombre";
-    public static final String E_Descripcion="descripcion";
-    public static final String E_Tipo="tipo";
-    public static final Boolean E_Estado="estado";
+    public static final String Crear_Tabla_Evento="create table eventos ("
+            +E_Id+" integer primary key autoincrement,"
+            +E_Nombre+" text not null,"
+            +P_Genero+" text not null,"
+            +P_Edad+" text not null,"
+            +P_Nivel_Salud+" text not null,"
+            +P_Nivel_Inteligencia+" text not null,"
+            +P_Nivel_Agilidad+" text not null,"
+            +P_Monedas+" text not null,"
+            +P_Nivel+" text not null,"
+            +P_live+" text not null);";
+
+
 
 }
