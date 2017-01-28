@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=descripcion
+comment0.target=Objetivo(java.lang.String)
+comment0.text=\r\n\ @param\ estado\ Estado\ del\ objetivo,\ Por\ defecto\ false\ que\ significa\ que\ no\ se\ ha\ completado\r\n\ @param\ descripcion\ Descripcion\ del\ objetivo\r\n
+comment1.params=
+comment1.target=boolean\ getCompletado()
+comment1.text=\r\n\ Retorna\ el\ estado\ del\ objetivo\ (True\=Completado,\ False\=No\ completado)\r\n\ @return\ estado\ Estado\ del\ objetivo\ (True\=Completado,\ False\=No\ completado)\r\n
+comment2.params=
+comment2.target=void\ finalizarObjetivo()
+comment2.text=\r\n\ Marca\ como\ completado\ el\ objetivo\r\n
+comment3.params=
+comment3.target=java.lang.String\ getDescripcion()
+comment3.text=\r\n\ Retorna\ la\ descripcion\ del\ objetivo\r\n\ @return\ descripcion\ Descripcion\ del\ objetivo\r\n
+numComments=4

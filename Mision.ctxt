@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=nombre\ descripcion\ puntaje\ experiencia\ monedas\ objetivos\ factor\ tiempo
+comment0.target=Mision(java.lang.String,\ java.lang.String,\ int,\ int,\ int,\ java.util.ArrayList,\ java.lang.String,\ int)
+comment0.text=\r\n\ @param\ nombre\ Nombre\ de\ la\ misi\u00F3n\r\n\ @param\ descripcion\ Descripcion\ de\ la\ misi\u00F3n\r\n\ @param\ monedas\ Monedas\ de\ oro\ otorgadas\ por\ la\ misi\u00F3n\r\n\ @param\ factor\ Factor\ asociado\ a\ la\ Salud\r\n\ @param\ objetivos\ Objetivos\ de\ la\ misi\u00F3n,\ contiene\ nombre\ y\ si\ es\ o\ no\ completada\r\n\ @param\ tiempo\ Tiempo\ para\ cumplir\ la\ misi\u00F3n\r\n
+comment1.params=
+comment1.target=boolean\ getEstado()
+comment1.text=\r\n\ Retorna\ el\ estado\ de\ la\ mision\ (True\=Activa,\ False\=No\ activa)\r\n\ @return\ estado\ Estado\ de\ la\ mision\ (True\=Activa,\ False\=No\ activa)\r\n
+comment2.params=estado
+comment2.target=void\ setEstado(boolean)
+comment2.text=\r\n\ Configura\ el\ estado\ de\ la\ Mision\r\n\ @argument\ Boolean\ estado\ Activa\ o\ Desactiva\ la\ mision.\r\n
+comment3.params=
+comment3.target=java.util.ArrayList\ crearObjetivo()
+comment3.text=\r\n\ Retorna\ la\ lista\ de\ objetivos\ que\ componen\ la\ misi\u00F3n\r\n\ @return\ Objetivos[]\ array\ de\ objetivos\ que\ componen\ la\ misi\u00F3n\r\n
+comment4.params=
+comment4.target=void\ finalizarMision()
+comment4.text=\r\n\ Marca\ como\ finalizada\ la\ misi\u00F3n\ y\ a\u00F1ade\ la\ experiencia\ y\ bonificaci\u00F3n\ al\r\n\ personaje\r\n
+numComments=5

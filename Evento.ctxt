@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.params=nombre\ descripcion\ misiones\ tipo
+comment0.target=Evento(java.lang.String,\ java.lang.String,\ java.util.ArrayList,\ java.lang.Enum)
+comment0.text=\r\n\ @param\ nombre\ Nombre\ del\ evento\r\n\ @param\ descripcion\ Descripcion\ del\ evento\r\n\ @param\ lista\ de\ Misiones\ Lista\ de\ misiones\ del\ evento\r\n\ @param\ tipo\ Tipo\ de\ evento\:\ Batalla,\ Entrenamiento\ o\ Investigaci\u00F3n\r\n
+comment1.params=
+comment1.target=java.util.ArrayList\ crearMisiones()
+comment1.text=\r\n\ Crea\ una\ lista\ de\ misiones\ para\ el\ evento\r\n\ @return\ ArrayList<Mision>\ retorna\ lista\ vacia\ de\ misiones\ del\ evento.\r\n
+comment2.params=
+comment2.target=java.util.ArrayList\ getMisiones()
+comment2.text=\r\n\ Retorna\ la\ lista\ de\ misiones\ que\ componen\ el\ evento\r\n\ @return\ misiones\ retorna\ lista\ de\ misiones\ del\ evento.\r\n
+comment3.params=misiones
+comment3.target=void\ setMisiones(java.util.ArrayList)
+comment3.text=\r\n\ A\u00F1ade\ misiones\ a\ la\ lista\ de\ misiones\ del\ evento\r\n\ @argument\ ArrayList<Mision>\ misiones\ A\u00F1ade\ lista\ de\ misiones\ al\ evento.\r\n
+comment4.params=mision
+comment4.target=void\ activarMision(Mision)
+comment4.text=\r\n\ Marca\ una\ misi\u00F3n\ del\ evento\ como\ activa\ cuando\ el\ usuario\ la\ acepta\r\n\ @argument\ \ Mision\ \ marca\ la\ misi\u00F3n\ de\ la\ lista\ de\ misiones\ del\ evento\ como\ activa.\r\n
+comment5.params=
+comment5.target=boolean\ getEstado()
+comment6.params=estado
+comment6.target=void\ setEstado(boolean)
+comment7.params=
+comment7.target=java.util.ArrayList\ finEvento()
+comment7.text=\r\n\ Finaliza\ el\ evento\ y\ genera\ resumen\ de\ resultados\r\n\ @return\ \ String[]\ resultados\ de\ la\ finalizaci\u00F3n\ del\ evento\r\n
+numComments=8

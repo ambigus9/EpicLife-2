@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.params=id\ nombre\ descripcion\ costo\ bonificacionSalud\ bonificacionAgilidad\ bonificacionInteligencia
+comment0.target=Item(int,\ java.lang.String,\ java.lang.String,\ int,\ int,\ int,\ int)
+comment0.text=\r\n\ Contructor\ del\ Item\r\n\ \r\n\ @param\ id\ Id\ del\ item.\r\n\ @param\ nombre\ Nombre\ del\ item.\r\n\ @param\ descripcion\ Descripcion\ del\ item.\r\n\ @param\ costo\ Costo\ del\ item,\ en\ monedas\ de\ oro.\r\n\ @param\ bonificacionSalud\ Es\ el\ valor\ que\ aumenta\ la\ salud\ del\ jugador\ con\ este\ item.\r\n\ @param\ bonificacionAgilidad\ Es\ el\ valor\ que\ aumtenta\ la\ agilidad\ del\ jugador\ con\ este\ item.\r\n\ @param\ bonificacionInteligencia\ Es\ el\ valor\ que\ aumenta\ la\ inteligencia\ del\ jugador\ con\ este\ item.\r\n\ \r\n
+comment1.params=
+comment1.target=int\ getId()
+comment1.text=\r\n\ Retorna\ el\ id\ del\ item,\ este\ id\ es\ un\ numero\ unico\ que\ se\ le\ asigna\ a\ cada\ item\ del\ juego\r\n\ \r\n\ @return\ id\ Id\ del\ item.\r\n
+comment2.params=
+comment2.target=java.lang.String\ getNombre()
+comment2.text=\r\n\ Retorna\ el\ nombre\ del\ item\r\n\ @return\ nombre\ Nombre\ del\ item.\r\n
+comment3.params=
+comment3.target=java.lang.String\ getDescripcion()
+comment3.text=\r\n\ Retorna\ la\ descripci\u00F3n\ del\ item\r\n\ @return\ descripcion\ Descripcion\ del\ item.\ \r\n
+comment4.params=
+comment4.target=int\ getCosto()
+comment4.text=\r\n\ Retorna\ el\ costo\ del\ item\r\n\ @return\ costo\ Costo\ del\ item\r\n
+comment5.params=
+comment5.target=int\ getBonificacionSalud()
+comment5.text=\r\n\ Retorna\ la\ bonificacion\ de\ salud\ del\ item\r\n\ @return\ bonificacionSalud\ Bonificacion\ de\ salud\ del\ item.\r\n
+comment6.params=
+comment6.target=int\ getBonificacionAgilidad()
+comment6.text=\r\n\ Retorna\ la\ bonificacion\ de\ Agilidad\ del\ item\r\n\ @return\ bonificacionAgilidad\ Bonificacion\ de\ Agilidad\ del\ item.\r\n
+comment7.params=
+comment7.target=int\ bonificacionInteligencia()
+comment7.text=\r\n\ Retorna\ la\ bonificacion\ de\ Inteligencia\ del\ item\r\n\ @return\ bonificacionInteligencia\ Bonificacion\ de\ Inteligencia\ del\ item.\r\n
+numComments=8

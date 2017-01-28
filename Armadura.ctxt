@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=id\ nombre\ descripcion\ costo\ bonificacionSalud\ bonificacionAgilidad\ bonificacionInteligencia\ parteCuerpo
+comment0.target=Armadura(int,\ java.lang.String,\ java.lang.String,\ int,\ int,\ int,\ int,\ java.lang.String)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Armadura\r\n\ @param\ id\ Id\ del\ item.\r\n\ @param\ nombre\ Nombre\ del\ item.\r\n\ @param\ descripcion\ Descripcion\ del\ item.\r\n\ @param\ costo\ Costo\ del\ item,\ en\ monedas\ de\ oro.\r\n\ @param\ bonificacionSalud\ Es\ el\ valor\ que\ aumenta\ la\ salud\ del\ jugador\ con\ este\ item.\r\n\ @param\ bonificacionAgilidad\ Es\ el\ valor\ que\ aumtenta\ la\ agilidad\ del\ jugador\ con\ este\ item.\r\n\ @param\ bonificacionInteligencia\ Es\ el\ valor\ que\ aumenta\ la\ inteligencia\ del\ jugador\ con\ este\ item.\r\n\ \r\n
+comment1.params=
+comment1.target=java.lang.String\ getParteCuerpo()
+comment1.text=\r\n\ Retorna\ lar\ parte\ del\ cuerpo\ en\ la\ cual\ se\ usa\ esta\ armadura\r\n\ @return\ parteCuerpo\ Parte\ del\ cuerpo\ de\ la\ amardura\r\n
+numComments=2

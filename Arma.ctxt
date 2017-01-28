@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=id\ nombre\ descripcion\ costo\ bonificacionSalud\ bonificacionAgilidad\ bonificacionInteligencia\ da\u00F1o\ elemento
+comment0.target=Arma(int,\ java.lang.String,\ java.lang.String,\ int,\ int,\ int,\ int,\ int,\ java.lang.String)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Arma\r\n\ @param\ id\ Id\ del\ arma.\r\n\ @param\ nombre\ Nombre\ del\ arma.\r\n\ @param\ descripcion\ Descripcion\ del\ arma.\r\n\ @param\ costo\ Costo\ del\ item,\ en\ monedas\ de\ oro.\r\n\ @param\ bonificacionSalud\ Es\ el\ valor\ que\ aumenta\ la\ salud\ del\ jugador\ con\ esta\ arma.\r\n\ @param\ bonificacionAgilidad\ Es\ el\ valor\ que\ aumtenta\ la\ agilidad\ del\ jugador\ con\ esta\ arma.\r\n\ @param\ bonificacionInteligencia\ Es\ el\ valor\ que\ aumenta\ la\ inteligencia\ del\ jugador\ con\ esta\ arma.\r\n\ @param\ da\u00F1o\ Da\u00F1o\ del\ arma.\r\n\ @param\ elemento\ Elemento\ del\ arma.\r\n\ \r\n
+comment1.params=
+comment1.target=int\ getDa\u00F1o()
+comment1.text=\r\n\ Retorna\ el\ da\u00F1o\ del\ arma\r\n\ @return\ da\u00F1o\ Da\u00F1o\ del\ arma\r\n
+comment2.params=
+comment2.target=java.lang.String\ getElemento()
+comment2.text=\r\n\ Retorna\ el\ elemento\ al\ cual\ pertence\ el\ arma\r\n\ @return\ elemento\ Elemento\ del\ arma.\r\n
+numComments=3
