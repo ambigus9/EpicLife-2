@@ -33,20 +33,36 @@ public class DBManager {
     /**
      * Este metodo permite insertar Eventos principales en la base de datos
      *
-     * @param Nombre Nombre que se le asigna al personaje
-     * @param Genero Genero que se le asigna al personaje {Hombre-Mujer}
-     * @param Edad  Edad inicial del personaje
+     * @param Nombre Nombre que se le asigna al evento
+     * @param Descripcion Descripcion que se le asigna al evento
+     * @param Tipo Tipo de evento {Batalla-Entrenamiento-Investigacion}
+     * @param Estado Estado del evento {True-False}
      */
     public void insertarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
         db.insert("eventos", null,generarContenedorEvento(Nombre,Descripcion,Tipo,Estado));
-    } // Este null no lo entiendo XD
+    }
+
+    /**
+     * Este metodo permite insertar Misiones principales en la base de datos
+     *
+     * @param Nombre Nombre que se le asigna a la mision
+     * @param Descripcion Descripcion que se le asigna a la mision
+     * @param Monedas Monedas que otorga la mision
+     * @param Factor Factor de la salud asociado a la mision {Nutricion-Ejercicio-Descanso}
+     * @param Tiempo Tiempo necesario para completar la mision
+     */
+    public void insertarMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
+        db.insert("misiones", null,generarContenedorMision(Nombre,Descripcion,Monedas,Factor,Tiempo));
+    }
 
     /**
      * Este metodo genera un contenedor necesario para la insercion de la informacion en SQlite
      * los atributos que no se pasan tienen los valores por defecto
-     * @param Nombre Nombre que se le asigna al personaje
-     * @param Genero Genero que se le asigna al personaje {Hombre-Mujer}
-     * @param Edad  Edad inicial del personaje
+     * @param Nombre Nombre que se le asigna a la mision
+     * @param Descripcion Descripcion que se le asigna a la mision
+     * @param Monedas Monedas que otorga la mision
+     * @param Factor Factor de la salud asociado a la mision {Nutricion-Ejercicio-Descanso}
+     * @param Tiempo Tiempo necesario para completar la mision
      */
     public ContentValues generarContenedorPersonajeNuevo(String Nombre, String Genero, String Edad){
         ContentValues contenedor= new ContentValues();
@@ -63,7 +79,7 @@ public class DBManager {
     }
 
     /**
-     * Este metodo genera un contenedor necesario para la insercion de la informacion en SQlite
+     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
      * los atributos que no se pasan tienen los valores por defecto
      * @param Nombre Nombre que se le asigna al personaje
      * @param Genero Genero que se le asigna al personaje {Hombre-Mujer}
@@ -84,7 +100,7 @@ public class DBManager {
     }
 
     /**
-     * Este metodo genera un contenedor necesario para la insercion de la informacion en SQlite
+     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
      * los atributos que no se pasan tienen los valores por defecto
      * @param Nombre Nombre que se le asigna al evento
      * @param Descripcion Descripcion que se le asigna al evento
@@ -97,6 +113,25 @@ public class DBManager {
         contenedor.put(E_Descripcion,Descripcion);
         contenedor.put(E_Tipo,Tipo);
         contenedor.put(E_Estado,Estado);
+        return contenedor;
+    }
+
+    /**
+     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
+     * los atributos que no se pasan tienen los valores por defecto
+     * @param Nombre Nombre que se le asigna a la mision
+     * @param Descripcion Descripcion que se le asigna a la mision
+     * @param Monedas Monedas que otorga la mision
+     * @param Factor Factor de la salud asociado a la mision {Nutricion-Ejercicio-Descanso}
+     * @param Tiempo Tiempo necesario para completar la mision
+     */
+    public ContentValues generarContenedorMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
+        ContentValues contenedor= new ContentValues();
+        contenedor.put(M_Nombre,Nombre);
+        contenedor.put(M_Descripcion,Descripcion);
+        contenedor.put(M_Monedas,Monedas);
+        contenedor.put(M_Factor,Factor);
+        contenedor.put(M_Tiempo,Tiempo);
         return contenedor;
     }
 
@@ -114,7 +149,15 @@ public class DBManager {
     public Cursor cargarCursorEvento(){
         String [] columnas=new String []{E_Id,E_Nombre,E_Descripcion,E_Tipo,E_Estado};
         return db.query("eventos", columnas, null, null);
-    } // Cuántos null van, tantos como variables tenga?
+    }
+
+    /**
+     * Permite cargar un cursor con la informacion de todos las Misiones
+     */
+    public Cursor cargarCursorMision(){
+        String [] columnas=new String []{M_Id,M_Nombre,M_Descripcion,M_Monedas,M_Factor,M_Tiempo};
+        return db.query("misiones", columnas, null, null);
+    }
 
     /**
      * Este metodo permite Buscar un personaje en la base de datos
@@ -136,16 +179,26 @@ public class DBManager {
         return db.query("eventos", columnas,E_Nombre+"=?",new String[]{Nombre}, null, null, null);
     }
 
+    /**
+     * Este metodo permite Buscar una mision en la base de datos
+     * por el nombre.     *
+     * @param Nombre Nombre que se le asigna a la mision
+     */
+    public Cursor buscarMisionNombre(String Nombre){
+        String [] columnas=new String []{M_Id,M_Nombre,M_Descripcion,M_Monedas,M_Factor,M_Tiempo};
+        return db.query("misiones", columnas,M_Nombre+"=?",new String[]{Nombre}, null, null, null);
+    }
+
     public void modificarPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
         db.update("personajes", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
-    } // Porque colocas usuarios en vez de personajes???
+    }
 
     public void modificarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
         db.update("eventos", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
     }
 
     public void modificarMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
-        db.update("eventos", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
+        db.update("misiones", generarContenedorMision(Nombre,Descripcion,Monedas,Factor,Tiempo),M_Nombre+"=?",new String[]{Nombre});
     }
 
     //campos de la tabla Personaje
