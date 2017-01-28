@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Created by Administrador on 27/01/2017.
+ * Updated by Administrador on 28/01/2017.
  */
 
 public class DBManager {
@@ -31,7 +31,7 @@ public class DBManager {
     }
 
     /**
-     * Este metodo permite insertar Eventos principales en la base de datos
+     * Este metodo permite insertar Eventos en la base de datos
      *
      * @param Nombre Nombre que se le asigna al evento
      * @param Descripcion Descripcion que se le asigna al evento
@@ -43,7 +43,7 @@ public class DBManager {
     }
 
     /**
-     * Este metodo permite insertar Misiones principales en la base de datos
+     * Este metodo permite insertar Misiones en la base de datos
      *
      * @param Nombre Nombre que se le asigna a la mision
      * @param Descripcion Descripcion que se le asigna a la mision
@@ -53,6 +53,16 @@ public class DBManager {
      */
     public void insertarMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
         db.insert("misiones", null,generarContenedorMision(Nombre,Descripcion,Monedas,Factor,Tiempo));
+    }
+
+    /**
+     * Este metodo permite insertar Objetivos en la base de datos
+     *
+     * @param Descripcion Descripcion que se le asigna al objetivo
+     * @param Estado Estado del objetivo
+     */
+    public void insertarObjetivo(String Descripcion,String Estado){
+        db.insert("objetivos", null,generarContenedorObjetivo(Descripcion,Estado));
     }
 
     /**
@@ -136,6 +146,19 @@ public class DBManager {
     }
 
     /**
+     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
+     * los atributos que no se pasan tienen los valores por defecto
+     * @param Descripcion Descripcion que se le asigna al objetivo
+     * @param Estado Estado del objetivo
+     */
+    public ContentValues generarContenedorObjetivo(String Descripcion,String Estado){
+        ContentValues contenedor= new ContentValues();
+        contenedor.put(O_Descripcion,Descripcion);
+        contenedor.put(O_Estado,Estado);
+        return contenedor;
+    }
+
+    /**
      * Permite cargar un cursor con la informacion de todos los Personajes
      */
     public Cursor cargarCursorPersonaje(){
@@ -157,6 +180,14 @@ public class DBManager {
     public Cursor cargarCursorMision(){
         String [] columnas=new String []{M_Id,M_Nombre,M_Descripcion,M_Monedas,M_Factor,M_Tiempo};
         return db.query("misiones", columnas, null, null);
+    }
+
+    /**
+     * Permite cargar un cursor con la informacion de todos las Misiones
+     */
+    public Cursor cargarCursorObjetivo(){
+        String [] columnas=new String []{O_Id,O_Descripcion,O_Estado};
+        return db.query("objetivos", columnas, null, null);
     }
 
     /**
@@ -189,6 +220,16 @@ public class DBManager {
         return db.query("misiones", columnas,M_Nombre+"=?",new String[]{Nombre}, null, null, null);
     }
 
+    /**
+     * Este metodo permite Buscar un objetivo en la base de datos
+     * por la Descripcion.     *
+     * @param Descripcion Descripcion de un objetivo
+     */
+    public Cursor buscarObjetivoDescripcion(String Descripcion){
+        String [] columnas=new String []{O_Id,O_Descripcion,O_Estado};
+        return db.query("objetivos", columnas,O_Descripcion+"=?",new String[]{Descripcion}, null, null, null);
+    }
+
     public void modificarPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
         db.update("personajes", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
     }
@@ -199,6 +240,10 @@ public class DBManager {
 
     public void modificarMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
         db.update("misiones", generarContenedorMision(Nombre,Descripcion,Monedas,Factor,Tiempo),M_Nombre+"=?",new String[]{Nombre});
+    }
+
+    public void modificarObjetivo(String Descripcion,String Estado){
+        db.update("objetivos", generarContenedorObjetivo(Descripcion,Estado),O_Descripcion+"=?",new String[]{Descripcion});
     }
 
     //campos de la tabla Personaje
@@ -228,6 +273,11 @@ public class DBManager {
     public static final String M_Factor="factor";
     public static final String M_Tiempo="tiempo";
 
+    //campos de la tabla Objetivo
+    public static final String O_Id="_id";
+    public static final String O_Descripcion="descripcion";
+    public static final String O_Estado="estado";
+
     // Variables para la creacion de tablas en la base de datos
     public static final String Crear_Tabla_Personaje="create table personajes ("
             +P_Id+" integer primary key autoincrement,"
@@ -248,13 +298,18 @@ public class DBManager {
             +E_Tipo+" text not null,"
             +E_Estado+" text not null,"
 
-    public static final String Crear_Tabla_Mision="create table mision ("
+    public static final String Crear_Tabla_Mision="create table misiones ("
             +M_Id+" integer primary key autoincrement,"
             +M_Nombre+" text not null,"
             +M_Descripcion+" text not null,"
             +M_Monedas+" text not null,"
             +M_Factor+" text not null,"
             +M_Tiempo+" text not null,"
+
+    public static final String Crear_Tabla_Objetivo="create table objetivos ("
+            +O_Id+" integer primary key autoincrement,"
+            +O_Descripcion+" text not null,"
+            +O_Estado+" text not null,"
 
 
 }
