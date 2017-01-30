@@ -61,6 +61,50 @@ public class DBManager {
                 10,
                 20,
                 "metal"),"false"));
+        db.insert("armas", null,generarContenedorArma(new Arma(3,
+                "Espada de Fuego",
+                "Espada para piromanos",
+                R.drawable.espada_fuego_icono,
+                R.drawable.espada_fuego,
+                20,
+                20,
+                20,
+                20,
+                25,
+                "fuego"),"false"));
+        db.insert("armas", null,generarContenedorArma(new Arma(4,
+                "Espada de Necro",
+                "Espada para necrofagos",
+                R.drawable.espada_necro_icono,
+                R.drawable.espada_necro,
+                25,
+                25,
+                25,
+                25,
+                30,
+                "hueso"),"false"));
+        db.insert("armas", null,generarContenedorArma(new Arma(5,
+                "Espada de Oro",
+                "Espada para expertos",
+                R.drawable.espada_oro_icono,
+                R.drawable.espada_oro,
+                40,
+                40,
+                40,
+                40,
+                50,
+                "oro"),"false"));
+        db.insert("armas", null,generarContenedorArma(new Arma(6,
+                "Espada de Sombra",
+                "Espada para veteranos",
+                R.drawable.espada_sombra_icono,
+                R.drawable.espada_sombra,
+                50,
+                50,
+                50,
+                50,
+                60,
+                "sombra"),"false"));
     }
 
     /**
@@ -73,12 +117,36 @@ public class DBManager {
                 R.drawable.bronce_icono,
                 R.drawable.bronce,
                 10,1,1,1),"true"));
-        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(1,
+        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(2,
                 "Armadura Hierro",
                 "Armadura Fuerte para luchar contra los malos habitos",
                 R.drawable.hierro_icono,
                 R.drawable.hierro,
-                10,3,3,3),"false"));
+                12,3,3,3),"false"));
+        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(3,
+                "Armadura Jungla",
+                "Armadura Poderosa para luchar contra los malos habitos",
+                R.drawable.jungla_icono,
+                R.drawable.jungla,
+                15,5,5,5),"false"));
+        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(4,
+                "Armadura Lava",
+                "Armadura Maravillosa para luchar contra los malos habitos",
+                R.drawable.lava_icono,
+                R.drawable.lava,
+                20,7,7,7),"false"));
+        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(5,
+                "Armadura Oro",
+                "Armadura Perfecta para luchar contra los malos habitos",
+                R.drawable.oro_icono,
+                R.drawable.oro,
+                22,8,8,8),"false"));
+        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(6,
+                "Armadura Sombra",
+                "Armadura Definitiva para luchar contra los malos habitos",
+                R.drawable.sombra_icono,
+                R.drawable.sombra,
+                25,9,9,9),"false"));
     }
 
 
