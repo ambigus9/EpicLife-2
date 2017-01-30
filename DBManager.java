@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Updated by Administrador on 28/01/2017.
+ * Created by Administrador on 27/01/2017.
  */
 
 public class DBManager {
@@ -19,352 +22,263 @@ public class DBManager {
         db = helper.getWritableDatabase();
     }
 
+
+
+
     /**
      * Este metodo permite insertar Personajes principales en la base de datos
      *
-     * @param Nombre Nombre que se le asigna al personaje
-     * @param Genero Genero que se le asigna al personaje {Hombre-Mujer}
-     * @param Edad  Edad inicial del personaje
+     * @param personaje instancia del personaje que sera almacenado en la base de datos
      */
-    public void insertarPersonaje(String Nombre,String Genero,String Edad){
-        db.insert("personajes", null,generarContenedorPersonajeNuevo(Nombre,Genero,Edad));
+    public void insertarPersonaje(Personaje personaje){
+        db.insert("personajes", null,generarContenedorPersonaje(personaje));
     }
 
-    /**
-     * Este metodo permite insertar Eventos en la base de datos
-     *
-     * @param Nombre Nombre que se le asigna al evento
-     * @param Descripcion Descripcion que se le asigna al evento
-     * @param Tipo Tipo de evento {Batalla-Entrenamiento-Investigacion}
-     * @param Estado Estado del evento {True-False}
-     */
-    public void insertarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
-        db.insert("eventos", null,generarContenedorEvento(Nombre,Descripcion,Tipo,Estado));
-    }
 
     /**
-     * Este metodo permite insertar Misiones en la base de datos
-     *
-     * @param Nombre Nombre que se le asigna a la mision
-     * @param Descripcion Descripcion que se le asigna a la mision
-     * @param Monedas Monedas que otorga la mision
-     * @param Factor Factor de la salud asociado a la mision {Nutricion-Ejercicio-Descanso}
-     * @param Tiempo Tiempo necesario para completar la mision
+     * Este metodo permite insertar Armas en la base de datos
      */
-    public void insertarMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
-        db.insert("misiones", null,generarContenedorMision(Nombre,Descripcion,Monedas,Factor,Tiempo));
-    }
-
-    /**
-     * Este metodo permite insertar Objetivos en la base de datos
-     *
-     * @param Descripcion Descripcion que se le asigna al objetivo
-     * @param Estado Estado del objetivo
-     */
-    public void insertarObjetivo(String Descripcion,String Estado){
-        db.insert("objetivos", null,generarContenedorObjetivo(Descripcion,Estado));
+    public void insertarArmas(){
+        db.insert("armas", null,generarContenedorArma(new Arma(1,
+                "Espada de Madera",
+                "Apenas te puedes defender con ella",
+                R.drawable.armainicial_icono,
+                R.drawable.armainicial,
+                0,
+                0,
+                0,
+                0,
+                10,
+                "madera"),"true"));
+        db.insert("armas", null,generarContenedorArma(new Arma(2,
+                "Espada de Bronce",
+                "Espada para novatos",
+                R.drawable.espada_bronce_icono,
+                R.drawable.espada_bronce,
+                10,
+                10,
+                10,
+                10,
+                20,
+                "metal"),"false"));
     }
 
     /**
      * Este metodo permite insertar Armas en la base de datos
-     *
-     * @param Nombre Nombre del arma.
-     * @param Descripcion Descripcion del arma.
-     * @param Costo Costo del item, en monedas de oro.
-     * @param Bonus_Salud Es el valor que aumenta la salud del jugador con esta arma.
-     * @param Bonus_Inteligencia Es el valor que aumenta la inteligencia del jugador con esta arma.
-     * @param Bonus_Agilidad Es el valor que aumenta la agilidad del jugador con esta arma.
-     * @param Elemento Elemento del arma.
      */
-    public void insertarArma(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad,String Elemento){
-        db.insert("armas", null,generarContenedorArma(Nombre,Descripcion,Costo,Salud,Inteligencia,Agilidad,Elemento));
+    public void insertarArmaduras(){
+        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(1,
+                "Armadura Bronce",
+                "Armadura básica para luchar contra los malos habitos",
+                R.drawable.bronce_icono,
+                R.drawable.bronce,
+                10,1,1,1),"true"));
+        db.insert("armaduras", null,generarContenedorArmadura(new Armadura(1,
+                "Armadura Hierro",
+                "Armadura Fuerte para luchar contra los malos habitos",
+                R.drawable.hierro_icono,
+                R.drawable.hierro,
+                10,3,3,3),"false"));
     }
+
+
+
+
+
+
 
     /**
-     * Este metodo permite insertar Armaduras en la base de datos
-     *
-     * @param Nombre Nombre de la armadura.
-     * @param Descripcion Descripcion de la armadura.
-     * @param Costo Costo del item, en monedas de oro.
-     * @param Bonus_Salud Es el valor que aumenta la salud del jugador con esta armadura.
-     * @param Bonus_Inteligencia Es el valor que aumenta la inteligencia del jugador con esta armadura.
-     * @param Bonus_Agilidad Es el valor que aumenta la agilidad del jugador con esta armadura.
+     * Permite cargar una instancia del personaje
      */
+    public Personaje cargarPersonaje(){
+        Personaje personaje= Personaje.getPersonajeInstance();
+        Cursor cursor;
+        String [] columnas=new String []{P_Id,P_Nombre,P_Genero,P_Edad,P_Nivel_Salud,P_Nivel_Inteligencia,P_Nivel_Agilidad,P_Monedas,P_Nivel,P_live};
+        cursor= db.query("personajes", columnas, null, null, null, null, null);
+        if(cursor.moveToLast()){
+            personaje.setNombre(cursor.getString(1));
+            personaje.setGenero(cursor.getString(2));
+            personaje.setEdad(cursor.getInt(3));
+            personaje.setSalud(cursor.getInt(4));
+            personaje.setInteligencia(cursor.getInt(5));
+            personaje.setAgilidad(cursor.getInt(6));
+            personaje.addMonedas(cursor.getInt(7));
+            personaje.setNivel(cursor.getInt(8));
+            personaje.setLive(Boolean.getBoolean(cursor.getString(9)));
+        }
 
-    public void insertarArmadura(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad){
-        db.insert("armaduras", null,generarContenedorArmadura(Nombre,Descripcion,Costo,Salud,Inteligencia,Agilidad));
+        personaje.setItems(cargarItemsInventario());
+        return personaje;
     }
+
+
+    public ArrayList<Item> cargarItemsTienda(){
+
+        ArrayList<Item> itemsTienda = new ArrayList();
+        Cursor cursor;
+        String [] columnasArmas= new String []{W_Id,W_Nombre,W_Descripcion,W_icono,W_imagen,W_Costo,W_Bonus_Salud,W_Bonus_Inteligencia,W_Bonus_Agilidad,W_dano,W_Elemento,W_comprada};
+        cursor = db.query("armas", columnasArmas,W_comprada+"=?",new String[]{"false"}, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                itemsTienda.add(new Arma(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6),
+                        cursor.getInt(7),
+                        cursor.getInt(8),
+                        cursor.getInt(9),
+                        cursor.getString(10)));
+            } while(cursor.moveToNext());
+        }
+
+        String [] columnasArmaduras= new String []{A_Id,A_Nombre,A_Descripcion,A_icono,A_imagen,A_Costo,A_Bonus_Salud,A_Bonus_Inteligencia,A_Bonus_Agilidad};
+        cursor = db.query("armaduras", columnasArmaduras,A_comprada+"=?",new String[]{"false"}, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                itemsTienda.add(new Armadura(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6),
+                        cursor.getInt(7),
+                        cursor.getInt(8)));
+            } while(cursor.moveToNext());
+        }
+
+        return itemsTienda;
+
+    }
+
+    public ArrayList<Item> cargarItemsInventario(){
+
+        ArrayList<Item> itemsTienda = new ArrayList();
+        Cursor cursor;
+        String [] columnasArmas= new String []{W_Id,W_Nombre,W_Descripcion,W_icono,W_imagen,W_Costo,W_Bonus_Salud,W_Bonus_Inteligencia,W_Bonus_Agilidad,W_dano,W_Elemento,W_comprada};
+        cursor = db.query("armas", columnasArmas,W_comprada+"=?",new String[]{"true"}, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                itemsTienda.add(new Arma(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6),
+                        cursor.getInt(7),
+                        cursor.getInt(8),
+                        cursor.getInt(9),
+                        cursor.getString(10)));
+            } while(cursor.moveToNext());
+        }
+
+        String [] columnasArmaduras= new String []{A_Id,A_Nombre,A_Descripcion,A_icono,A_imagen,A_Costo,A_Bonus_Salud,A_Bonus_Inteligencia,A_Bonus_Agilidad};
+        cursor = db.query("armaduras", columnasArmaduras,A_comprada+"=?",new String[]{"true"}, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                itemsTienda.add(new Armadura(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6),
+                        cursor.getInt(7),
+                        cursor.getInt(8)));
+            } while(cursor.moveToNext());
+        }
+
+        return itemsTienda;
+
+    }
+
+
+
+    /**
+     * Este medodo permite Buscar un personaje en la base de datos
+     * por el nombre.     *
+     * @param personaje Instancia del personaje que contiene la informacion que se desea almacenar
+     */
+    public Cursor buscarPersonajeNombre(Personaje personaje){
+        String [] columnas=new String []{P_Id,P_Nombre,P_Genero,P_Edad,P_Nivel_Salud,P_Nivel_Inteligencia,P_Nivel_Agilidad,P_Monedas,P_Nivel,P_live};
+        return db.query("personajes", columnas,P_Nombre+"=?",new String[]{personaje.getNombre()}, null, null, null);
+    }
+
+
+    public void modificarPersonaje(Personaje personaje){
+        db.update("personajes", generarContenedorPersonaje(personaje),P_Nombre+"=?",new String[]{personaje.getNombre()});
+    }
+
 
     /**
      * Este metodo genera un contenedor necesario para la insercion de la informacion en SQlite
-     * los atributos que no se pasan tienen los valores por defecto
-     * @param Nombre Nombre que se le asigna a la mision
-     * @param Descripcion Descripcion que se le asigna a la mision
-     * @param Monedas Monedas que otorga la mision
-     * @param Factor Factor de la salud asociado a la mision {Nutricion-Ejercicio-Descanso}
-     * @param Tiempo Tiempo necesario para completar la mision
+     * @param personaje instancia del personaje sobre el cual se desea crear el contenedor
      */
-    public ContentValues generarContenedorPersonajeNuevo(String Nombre, String Genero, String Edad){
+    public ContentValues generarContenedorPersonaje(Personaje personaje){
         ContentValues contenedor= new ContentValues();
-        contenedor.put(P_Nombre,Nombre);
-        contenedor.put(P_Genero,Genero);
-        contenedor.put(P_Edad,Edad);
-        contenedor.put(P_Nivel_Salud,"100");
-        contenedor.put(P_Nivel_Inteligencia,"100");
-        contenedor.put(P_Nivel_Agilidad,"100");
-        contenedor.put(P_Monedas,"0");
-        contenedor.put(P_Nivel,"1");
-        contenedor.put(P_live,"true");
+        contenedor.put(P_Nombre,personaje.getNombre());
+        contenedor.put(P_Genero,personaje.getGenero());
+        contenedor.put(P_Edad,personaje.getEdad());
+        contenedor.put(P_Nivel_Salud,personaje.getSalud());
+        contenedor.put(P_Nivel_Inteligencia,personaje.getInteligencia());
+        contenedor.put(P_Nivel_Agilidad,personaje.getAgilidad());
+        contenedor.put(P_Monedas,personaje.getMonedas());
+        contenedor.put(P_Nivel,personaje.getNivel());
+        contenedor.put(P_live,String.valueOf(personaje.isLive()));
         return contenedor;
     }
 
     /**
      * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
-     * los atributos que no se pasan tienen los valores por defecto
-     * @param Nombre Nombre que se le asigna al personaje
-     * @param Genero Genero que se le asigna al personaje {Hombre-Mujer}
-     * @param Edad  Edad inicial del personaje
+     * @param arma instancia del arma de la cual se obtiene el contenedor
      */
-    public ContentValues generarContenedorPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
+    public ContentValues generarContenedorArma(Arma arma,String comprada){
         ContentValues contenedor= new ContentValues();
-        contenedor.put(P_Nombre,Nombre);
-        contenedor.put(P_Genero,Genero);
-        contenedor.put(P_Edad,Edad);
-        contenedor.put(P_Nivel_Salud,Salud);
-        contenedor.put(P_Nivel_Inteligencia,Inteligencia);
-        contenedor.put(P_Nivel_Agilidad,Agilidad);
-        contenedor.put(P_Monedas,Monedas);
-        contenedor.put(P_Nivel,Nivel);
-        contenedor.put(P_live,Live);
+        contenedor.put(W_Id,arma.getId());
+        contenedor.put(W_Nombre,arma.getNombre());
+        contenedor.put(W_Descripcion,arma.getDescripcion());
+        contenedor.put(W_icono,arma.getIcono());
+        contenedor.put(W_imagen,arma.getImagen());
+        contenedor.put(W_Costo,arma.getCosto());
+        contenedor.put(W_Bonus_Salud,arma.getBonificacionSalud());
+        contenedor.put(W_Bonus_Inteligencia,arma.getbonificacionInteligencia());
+        contenedor.put(W_Bonus_Agilidad,arma.getBonificacionAgilidad());
+        contenedor.put(W_dano,arma.getDaño());
+        contenedor.put(W_Elemento,arma.getElemento());
+        contenedor.put(W_comprada,comprada);
         return contenedor;
     }
 
     /**
      * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
-     * los atributos que no se pasan tienen los valores por defecto
-     * @param Nombre Nombre que se le asigna al evento
-     * @param Descripcion Descripcion que se le asigna al evento
-     * @param Tipo Tipo de evento {Batalla-Entrenamiento-Investigacion}
-     * @param Estado Estado del evento {True-False}
+     * @param armadura instancia de la armadura que se desea almacenar
      */
-    public ContentValues generarContenedorEvento(String Nombre,String Descripcion,String Tipo,String Estado){
+    public ContentValues generarContenedorArmadura(Armadura armadura, String comprada){
         ContentValues contenedor= new ContentValues();
-        contenedor.put(E_Nombre,Nombre);
-        contenedor.put(E_Descripcion,Descripcion);
-        contenedor.put(E_Tipo,Tipo);
-        contenedor.put(E_Estado,Estado);
+        contenedor.put(A_Id,armadura.getId());
+        contenedor.put(A_Nombre,armadura.getNombre());
+        contenedor.put(A_Descripcion,armadura.getDescripcion());
+        contenedor.put(A_icono,armadura.getIcono());
+        contenedor.put(A_imagen,armadura.getImagen());
+        contenedor.put(A_Costo,armadura.getCosto());
+        contenedor.put(A_Bonus_Salud,armadura.getBonificacionSalud());
+        contenedor.put(A_Bonus_Inteligencia,armadura.getbonificacionInteligencia());
+        contenedor.put(A_Bonus_Agilidad,armadura.getBonificacionAgilidad());
+        contenedor.put(A_comprada,comprada);
         return contenedor;
     }
 
-    /**
-     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
-     * los atributos que no se pasan tienen los valores por defecto
-     * @param Nombre Nombre que se le asigna a la mision
-     * @param Descripcion Descripcion que se le asigna a la mision
-     * @param Monedas Monedas que otorga la mision
-     * @param Factor Factor de la salud asociado a la mision {Nutricion-Ejercicio-Descanso}
-     * @param Tiempo Tiempo necesario para completar la mision
-     */
-    public ContentValues generarContenedorMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
-        ContentValues contenedor= new ContentValues();
-        contenedor.put(M_Nombre,Nombre);
-        contenedor.put(M_Descripcion,Descripcion);
-        contenedor.put(M_Monedas,Monedas);
-        contenedor.put(M_Factor,Factor);
-        contenedor.put(M_Tiempo,Tiempo);
-        return contenedor;
-    }
 
-    /**
-     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
-     * los atributos que no se pasan tienen los valores por defecto
-     * @param Descripcion Descripcion que se le asigna al objetivo
-     * @param Estado Estado del objetivo
-     */
-    public ContentValues generarContenedorObjetivo(String Descripcion,String Estado){
-        ContentValues contenedor= new ContentValues();
-        contenedor.put(O_Descripcion,Descripcion);
-        contenedor.put(O_Estado,Estado);
-        return contenedor;
-    }
 
-    /**
-     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
-     * los atributos que no se pasan tienen los valores por defecto
-     * @param Nombre Nombre del arma.
-     * @param Descripcion Descripcion del arma.
-     * @param Costo Costo del item, en monedas de oro.
-     * @param Bonus_Salud Es el valor que aumenta la salud del jugador con esta arma.
-     * @param Bonus_Inteligencia Es el valor que aumenta la inteligencia del jugador con esta arma.
-     * @param Bonus_Agilidad Es el valor que aumenta la agilidad del jugador con esta arma.
-     * @param Elemento Elemento del arma.
-     */
-    public ContentValues generarContenedorArma(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad,String Elemento){
-        ContentValues contenedor= new ContentValues();
-        contenedor.put(W_Nombre,Nombre);
-        contenedor.put(W_Descripcion,Descripcion);
-        contenedor.put(W_Costo,Costo);
-        contenedor.put(W_Bonus_Salud,Salud);
-        contenedor.put(W_Bonus_Inteligencia,Inteligencia);
-        contenedor.put(W_Bonus_Agilidad,Agilidad);
-        contenedor.put(W_Elemento,Elemento);
-        return contenedor;
-    }
-
-    /**
-     * Este metodo genera un contenedor necesario para la insersion de la informacion en SQlite
-     * los atributos que no se pasan tienen los valores por defecto
-     * @param Nombre Nombre de la armadura.
-     * @param Descripcion Descripcion de la armadura.
-     * @param Costo Costo del item, en monedas de oro.
-     * @param Bonus_Salud Es el valor que aumenta la salud del jugador con esta armadura.
-     * @param Bonus_Inteligencia Es el valor que aumenta la inteligencia del jugador con esta armadura.
-     * @param Bonus_Agilidad Es el valor que aumenta la agilidad del jugador con esta armadura.
-     */
-    public ContentValues generarContenedorArmadura(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad){
-        ContentValues contenedor= new ContentValues();
-        contenedor.put(A_Nombre,Nombre);
-        contenedor.put(A_Descripcion,Descripcion);
-        contenedor.put(A_Costo,Costo);
-        contenedor.put(A_Bonus_Salud,Salud);
-        contenedor.put(A_Bonus_Inteligencia,Inteligencia);
-        contenedor.put(A_Bonus_Agilidad,Agilidad);
-        return contenedor;
-    }
-
-    /**
-     * Permite cargar un cursor con la informacion de todos los Personajes
-     */
-    public Cursor cargarCursorPersonaje(){
-        String [] columnas=new String []{P_Id,P_Nombre,P_Genero,P_Edad,P_Nivel_Salud,P_Nivel_Inteligencia,P_Nivel_Agilidad,P_Monedas,P_Nivel,P_live};
-        return db.query("personajes", columnas, null, null, null, null, null);
-    }
-
-    /**
-     * Permite cargar un cursor con la informacion de todos los Eventos
-     */
-    public Cursor cargarCursorEvento(){
-        String [] columnas=new String []{E_Id,E_Nombre,E_Descripcion,E_Tipo,E_Estado};
-        return db.query("eventos", columnas, null, null);
-    }
-
-    /**
-     * Permite cargar un cursor con la informacion de todos las Misiones
-     */
-    public Cursor cargarCursorMision(){
-        String [] columnas=new String []{M_Id,M_Nombre,M_Descripcion,M_Monedas,M_Factor,M_Tiempo};
-        return db.query("misiones", columnas, null, null);
-    }
-
-    /**
-     * Permite cargar un cursor con la informacion de todos las Misiones
-     */
-    public Cursor cargarCursorObjetivo(){
-        String [] columnas=new String []{O_Id,O_Descripcion,O_Estado};
-        return db.query("objetivos", columnas, null, null);
-    }
-
-    /**
-     * Permite cargar un cursor con la informacion de todos las Armas
-     */
-    public Cursor cargarCursorArma(){
-        String [] columnas=new String []{W_Id,W_Nombre,W_Descripcion,W_Costo,W_Bonus_Salud,W_Bonus_Inteligencia,W_Bonus_Agilidad,W_Elemento};
-        return db.query("armas", columnas, null, null);
-    }
-
-    /**
-     * Permite cargar un cursor con la informacion de todos las Armaduras
-     */
-    public Cursor cargarCursorArmadura(){
-        String [] columnas=new String []{A_Id,A_Nombre,A_Descripcion,A_Costo,A_Bonus_Salud,A_Bonus_Inteligencia,A_Bonus_Agilidad};
-        return db.query("armaduras", columnas, null, null);
-    }
-
-    /**
-     * Este metodo permite Buscar un personaje en la base de datos
-     * por el nombre.     *
-     * @param Nombre Nombre que se le asigna al personaje
-     */
-    public Cursor buscarPersonajeNombre(String Nombre){
-        String [] columnas=new String []{P_Id,P_Nombre,P_Genero,P_Edad,P_Nivel_Salud,P_Nivel_Inteligencia,P_Nivel_Agilidad,P_Monedas,P_Nivel,P_live};
-        return db.query("personajes", columnas,P_Nombre+"=?",new String[]{Nombre}, null, null, null);
-    }
-
-    /**
-     * Este metodo permite Buscar un evento en la base de datos
-     * por el nombre.     *
-     * @param Nombre Nombre que se le asigna al evento
-     */
-    public Cursor buscarEventoNombre(String Nombre){
-        String [] columnas=new String []{E_Id,E_Nombre,E_Descripcion,E_Tipo,E_Estado};
-        return db.query("eventos", columnas,E_Nombre+"=?",new String[]{Nombre}, null, null, null);
-    }
-
-    /**
-     * Este metodo permite Buscar una mision en la base de datos
-     * por el nombre.     *
-     * @param Nombre Nombre que se le asigna a la mision
-     */
-    public Cursor buscarMisionNombre(String Nombre){
-        String [] columnas=new String []{M_Id,M_Nombre,M_Descripcion,M_Monedas,M_Factor,M_Tiempo};
-        return db.query("misiones", columnas,M_Nombre+"=?",new String[]{Nombre}, null, null, null);
-    }
-
-    /**
-     * Este metodo permite Buscar un objetivo en la base de datos
-     * por la Descripcion.     *
-     * @param Descripcion Descripcion de un objetivo
-     */
-    public Cursor buscarObjetivoDescripcion(String Descripcion){
-        String [] columnas=new String []{O_Id,O_Descripcion,O_Estado};
-        return db.query("objetivos", columnas,O_Descripcion+"=?",new String[]{Descripcion}, null, null, null);
-    }
-
-    /**
-     * Este metodo permite Buscar un arma en la base de datos
-     * por el nombre.     *
-     * @param Nombre Nombre de un arma
-     */
-    public Cursor buscarArmaNombre(String Descripcion){
-        String [] columnas=new String []{W_Id,W_Nombre,W_Descripcion,W_Costo,W_Bonus_Salud,W_Bonus_Inteligencia,W_Bonus_Agilidad,W_Elemento};
-        return db.query("armas", columnas,W_Nombre+"=?",new String[]{Nombre}, null, null, null);
-    }
-
-    /**
-     * Este metodo permite Buscar un armadura en la base de datos
-     * por el nombre.     *
-     * @param Nombre Nombre de un armadura
-     */
-    public Cursor buscarArmaduraNombre(String Descripcion){
-        String [] columnas=new String []{A_Id,A_Nombre,A_Descripcion,A_Costo,A_Bonus_Salud,A_Bonus_Inteligencia,A_Bonus_Agilidad};
-        return db.query("armaduras", columnas,A_Nombre+"=?",new String[]{Nombre}, null, null, null);
-    }
-
-    public void modificarPersonaje(String Nombre,String Genero,String Edad,String Salud,String Inteligencia,String Agilidad,String Monedas,String Nivel,String Live){
-        db.update("personajes", generarContenedorPersonaje(Nombre,Genero,Edad,Salud,Inteligencia,Agilidad,Monedas,Nivel,Live),P_Nombre+"=?",new String[]{Nombre});
-    }
-
-    public void modificarEvento(String Nombre,String Descripcion,String Tipo,String Estado){
-        db.update("eventos", generarContenedorEvento(Nombre,Descripcion,Tipo,Estado),E_Nombre+"=?",new String[]{Nombre});
-    }
-
-    public void modificarMision(String Nombre,String Descripcion,String Monedas,String Factor,String Tiempo){
-        db.update("misiones", generarContenedorMision(Nombre,Descripcion,Monedas,Factor,Tiempo),M_Nombre+"=?",new String[]{Nombre});
-    }
-
-    public void modificarObjetivo(String Descripcion,String Estado){
-        db.update("objetivos", generarContenedorObjetivo(Descripcion,Estado),O_Descripcion+"=?",new String[]{Descripcion});
-    }
-
-    public void modificarArma(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad,String Elemento){
-        db.update("armas", generarContenedorArma(Nombre,Descripcion,Costo,Salud,Inteligencia,Agilidad,Elemento),W_Nombre+"=?",new String[]{Nombre});
-    }
-
-    public void modificarArmadura(String Nombre,String Descripcion,String Costo,String Salud,String Inteligencia,String Agilidad){
-        db.update("armaduras", generarContenedorArmadura(Nombre,Descripcion,Costo,Salud,Inteligencia,Agilidad),A_Nombre+"=?",new String[]{Nombre});
-    }
-
-    //campos de la tabla Personajes
+    //campos de la tabla Personaje
     public static final String P_Id="_id";
     public static final String P_Nombre="nombre";
     public static final String P_Genero="genero";
@@ -376,17 +290,39 @@ public class DBManager {
     public static final String P_Nivel="nivel";
     public static final String P_live="live";
 
-    //campos de la tabla Eventos
-    public static final String E_Id="_id";
-    public static final String E_Nombre="nombre";
-    public static final String E_Descripcion="descripcion";
-    public static final String E_Tipo="tipo";
-    public static final String E_Estado="estado";
+    //campos de la tabla Armas
+    public static final String W_Id="_id";
+    public static final String W_Nombre="nombre";
+    public static final String W_Descripcion="descripcion";
+    public static final String W_icono="icono";
+    public static final String W_imagen="imagen";
+    public static final String W_Costo="costo";
+    public static final String W_Bonus_Salud="salud";
+    public static final String W_Bonus_Inteligencia="inteligencia";
+    public static final String W_Bonus_Agilidad="agilidad";
+    public static final String W_dano="dano";
+    public static final String W_Elemento="elemento";
+    public static final String W_comprada="comprada";
+
+    //campos de la tabla Armaduras
+    public static final String A_Id="_id";
+    public static final String A_Nombre="nombre";
+    public static final String A_Descripcion="descripcion";
+    public static final String A_icono="icono";
+    public static final String A_imagen="imagen";
+    public static final String A_Costo="costo";
+    public static final String A_Bonus_Salud="salud";
+    public static final String A_Bonus_Inteligencia="inteligencia";
+    public static final String A_Bonus_Agilidad="agilidad";
+    public static final String A_comprada="comprada";
+
 
     //campos de la tabla Misiones
     public static final String M_Id="_id";
     public static final String M_Nombre="nombre";
     public static final String M_Descripcion="descripcion";
+    public static final String M_icono="icono";
+    public static final String M_imagen="imagen";
     public static final String M_Monedas="monedas";
     public static final String M_Factor="factor";
     public static final String M_Tiempo="tiempo";
@@ -396,75 +332,52 @@ public class DBManager {
     public static final String O_Descripcion="descripcion";
     public static final String O_Estado="estado";
 
-    //campos de la tabla Armas
-    public static final String W_Id="_id";
-    public static final String W_Nombre="nombre";
-    public static final String W_Descripcion="descripcion";
-    public static final String W_Costo="costo";
-    public static final String W_Bonus_Salud="salud";
-    public static final String W_Bonus_Inteligencia="inteligencia";
-    public static final String W_Bonus_Agilidad="agilidad";
-    public static final String W_Elemento="elemento";
 
-    //campos de la tabla Armaduras
-    public static final String A_Id="_id";
-    public static final String A_Nombre="nombre";
-    public static final String A_Descripcion="descripcion";
-    public static final String A_Costo="costo";
-    public static final String A_Bonus_Salud="salud";
-    public static final String A_Bonus_Inteligencia="inteligencia";
-    public static final String A_Bonus_Agilidad="agilidad";
 
     // Variables para la creacion de tablas en la base de datos
+
+    //sentencia SQL para crear la estructura de la tabla personaje
     public static final String Crear_Tabla_Personaje="create table personajes ("
             +P_Id+" integer primary key autoincrement,"
             +P_Nombre+" text not null,"
             +P_Genero+" text not null,"
-            +P_Edad+" text not null,"
-            +P_Nivel_Salud+" text not null,"
-            +P_Nivel_Inteligencia+" text not null,"
-            +P_Nivel_Agilidad+" text not null,"
-            +P_Monedas+" text not null,"
-            +P_Nivel+" text not null,"
+            +P_Edad+" integer not null,"
+            +P_Nivel_Salud+" integer not null,"
+            +P_Nivel_Inteligencia+" integer not null,"
+            +P_Nivel_Agilidad+" integer not null,"
+            +P_Monedas+" integer not null,"
+            +P_Nivel+" integer not null,"
             +P_live+" text not null);";
 
-    public static final String Crear_Tabla_Evento="create table eventos ("
-            +E_Id+" integer primary key autoincrement,"
-            +E_Nombre+" text not null,"
-            +E_Descripcion+" text not null,"
-            +E_Tipo+" text not null,"
-            +E_Estado+" text not null,"
-
-    public static final String Crear_Tabla_Mision="create table misiones ("
-            +M_Id+" integer primary key autoincrement,"
-            +M_Nombre+" text not null,"
-            +M_Descripcion+" text not null,"
-            +M_Monedas+" text not null,"
-            +M_Factor+" text not null,"
-            +M_Tiempo+" text not null,"
-
-    public static final String Crear_Tabla_Objetivo="create table objetivos ("
-            +O_Id+" integer primary key autoincrement,"
-            +O_Descripcion+" text not null,"
-            +O_Estado+" text not null,"
-
+    // Sentencia SQL para crear la estructura de la tabla arma
     public static final String Crear_Tabla_Arma="create table armas ("
-            +W_Id+" integer primary key autoincrement,"
+            +W_Id+" integer primary key,"
             +W_Nombre+" text not null,"
             +W_Descripcion+" text not null,"
-            +W_Costo+" text not null,"
-            +W_Bonus_Salud+" text not null,"
-            +W_Bonus_Inteligencia+" text not null,"
-            +W_Bonus_Agilidad+" text not null,"
+            +W_icono+" integer not null,"
+            +W_imagen+" integer not null,"
+            +W_Costo+" integer not null,"
+            +W_Bonus_Salud+" integer not null,"
+            +W_Bonus_Inteligencia+" integer not null,"
+            +W_Bonus_Agilidad+" integer not null,"
+            +W_dano+" integer not null,"
             +W_Elemento+" text not null,"
+            +W_comprada+" text not null);";
 
+    // Sentencia SQL para crear la estructura de la tabla armadura
     public static final String Crear_Tabla_Armadura="create table armaduras ("
-            +A_Id+" integer primary key autoincrement,"
+            +A_Id+" integer primary key,"
             +A_Nombre+" text not null,"
             +A_Descripcion+" text not null,"
+            +A_icono+" integer not null,"
+            +A_imagen+" integer not null,"
             +A_Costo+" text not null,"
             +A_Bonus_Salud+" text not null,"
             +A_Bonus_Inteligencia+" text not null,"
             +A_Bonus_Agilidad+" text not null,"
+            +A_comprada+" text not null);";
+
+
+
 
 }
